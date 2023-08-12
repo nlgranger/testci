@@ -23,9 +23,18 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Fetch all heads
-        run: git fetch --all --filter=tree:0
-
-      - name: List branches containing tag/ref
-        run: git branch -a --contains ${{ github.ref }} --format "%(refname:short)"
+      - name: Store whether the current ref is on main
+        id: check-ref-on-main
+        run: |
+          git fetch --all --filter=tree:0
+          printf "ref_on_main=%s\n" \
+            $(git branch -a --contains HEAD --format "%(refname:short)" \
+              | grep "^main$" &> /dev/null \
+              && echo "true" \
+              || echo "false" \
+            ) \
+            >> $GITHUB_OUTPUT
+      
+      - name: Run on main
+        if: ${{ steps.check-ref-on-main.outputs.ref_on_main }}
+        run: echo "hello"
