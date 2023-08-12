@@ -25,7 +25,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Fetch all heads
-        run: git fetch --all --depth=1
+        run: git fetch --all --filter=tree:0
 
       - name: List branches containing tag/ref
         run: git branch -a --contains ${{ github.ref }} --format "%(refname)"
