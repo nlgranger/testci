@@ -36,5 +36,5 @@ jobs:
             >> $GITHUB_OUTPUT
       
       - name: Run on main
-        if: ${{ steps.check-ref-on-main.outputs.ref_on_main == "true" }}
+        if: ${{ steps.check-ref-on-main.outputs.ref_on_main == 'true' }}
         run: echo "hello"
