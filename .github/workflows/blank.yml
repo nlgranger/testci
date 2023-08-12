@@ -28,4 +28,4 @@ jobs:
         run: git fetch --all --depth=1
 
       - name: List branches containing tag/ref
-        run: git branch -a --contains ${{ github.ref }} --format "$(refname)"
+        run: git branch -a --contains ${{ github.ref }} --format "%(refname)"
